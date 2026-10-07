@@ -1,0 +1,486 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is([data-theme="dark"] *));
+@custom-variant rtl (&:is([dir="rtl"] *));
+
+/* ======================================================
+   LIGHT THEME - Amethyst Haze
+   ====================================================== */
+
+:root {
+    /* ==================================================
+     BACKGROUND / SURFACE
+     ================================================== */
+
+    --color-background: oklch(0.9777 0.0041 301.4256);
+    /* Page background */
+    --color-surface: oklch(1 0 0);
+    /* Cards, navbar, panels */
+    --color-surface-secondary: oklch(0.8906 0.0139 299.7754);
+    /* Secondary surfaces / alternating panels */
+    --color-surface-muted: oklch(0.9329 0.0124 301.2783);
+    /* Subtle sections / disabled fields */
+    --color-overlay: rgb(0 0 0 / 50%);
+    /* Modals, dropdowns, etc */
+
+    /* ==================================================
+     BRAND COLORS
+     ================================================== */
+
+    --color-primary: oklch(0.6104 0.0767 299.7335);
+    /* Main brand / CTA */
+    --color-secondary: oklch(0.8957 0.0265 300.2416);
+    /* Secondary brand / secondary UI */
+    --color-accent: oklch(0.7889 0.0802 359.9375);
+    /* Highlights / emphasis */
+    --color-supporting: oklch(0.82 0.035 300);
+    /* Subtle borders / dividers */
+    --color-supporting-decorative: oklch(0.68 0.05 300);
+    /* Decorative / icons */
+
+    /* ==================================================
+     TEXT
+     ================================================== */
+
+    --color-text-primary: oklch(0.3651 0.0325 287.0807);
+    --color-text-secondary: oklch(0.5288 0.0375 290.7895);
+    --color-text-muted: oklch(0.5288 0.0375 290.7895);
+    --color-text-disabled: oklch(0.7 0.02 295);
+
+    /* ==================================================
+     INTERACTIVE
+     ================================================== */
+
+    --color-primary-hover: oklch(0.55 0.0767 299.7335);
+    --color-primary-active: oklch(0.5 0.0767 299.7335);
+
+    --color-on-primary: oklch(0.9777 0.0041 301.4256);
+    --color-on-secondary: oklch(0.3651 0.0325 287.0807);
+    --color-on-accent: oklch(0.3394 0.0441 1.7583);
+
+    --color-link: oklch(0.48 0.08 299);
+    --color-link-hover: oklch(0.36 0.06 295);
+    --color-on-link: oklch(1 0 0);
+
+    --color-focus-ring: oklch(0.6104 0.0767 299.7335);
+
+    /* ==================================================
+     FEEDBACK / STATUS
+     ================================================== */
+
+    --color-success: #397354;
+    --color-on-success: #FFFFFF;
+    --color-success-bg: #F0FDF4;
+
+    --color-warning: #8A641F;
+    --color-on-warning: #FFFFFF;
+    --color-warning-bg: #FFFBEB;
+
+    --color-error: oklch(0.6332 0.1578 22.6734);
+    --color-on-error: oklch(0.9777 0.0041 301.4256);
+    --color-error-bg: #FEF2F2;
+
+    --color-info: #4A6B8A;
+    --color-on-info: #FFFFFF;
+    --color-info-bg: #F0F9FF;
+
+    /* ==================================================
+     BORDER
+     ================================================== */
+
+    --color-border: oklch(0.8447 0.0226 300.1421);
+    --color-border-strong: oklch(0.74 0.035 300);
+
+    /* ==================================================
+     TYPOGRAPHY
+     ================================================== */
+
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+
+    /* ==================================================
+     RADIUS
+     ================================================== */
+
+    --radius-none: 0px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+    /* ==================================================
+     SHADOWS
+     ================================================== */
+
+    --shadow-none: none;
+    --shadow-sm: 0 1px 2px rgba(61, 60, 79, 0.06);
+    --shadow-md: 0 4px 12px rgba(61, 60, 79, 0.08);
+    --shadow-lg: 0 10px 24px rgba(61, 60, 79, 0.10);
+    --shadow-xl: 0 20px 40px rgba(61, 60, 79, 0.12);
+
+    /* ==================================================
+     Z-INDEX
+     ================================================== */
+
+    --z-base: 0;
+    --z-toolbar: 5;
+    --z-nav: 10;
+    --z-dropdown: 50;
+    --z-popover: 60;
+    --z-modal: 100;
+    --z-toast: 200;
+
+    /* ==================================================
+     BREAKPOINTS
+     ================================================== */
+
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+
+    /* ==================================================
+     SHADCN-ONLY TOKENS (not covered by --color-*)
+     ================================================== */
+
+    --radius: 0.625rem;
+
+    --chart-1: oklch(0.6104 0.0767 299.7335);
+    --chart-2: oklch(0.7889 0.0802 359.9375);
+    --chart-3: oklch(0.7321 0.0749 169.8670);
+    --chart-4: oklch(0.8540 0.0882 76.8292);
+    --chart-5: oklch(0.7857 0.0645 258.0839);
+
+    --sidebar: oklch(0.9554 0.0082 301.3541);
+    --sidebar-foreground: oklch(0.3651 0.0325 287.0807);
+    --sidebar-primary: oklch(0.6104 0.0767 299.7335);
+    --sidebar-primary-foreground: oklch(0.9777 0.0041 301.4256);
+    --sidebar-accent: oklch(0.7889 0.0802 359.9375);
+    --sidebar-accent-foreground: oklch(0.3394 0.0441 1.7583);
+    --sidebar-border: oklch(0.8719 0.0198 302.1690);
+    --sidebar-ring: oklch(0.6104 0.0767 299.7335);
+}
+
+/* ======================================================
+   SHADCN SEMANTIC ALIASES
+   ====================================================== */
+
+:root {
+    --background: var(--color-background);
+    --foreground: var(--color-text-primary);
+
+    --card: var(--color-surface);
+    --card-foreground: var(--color-text-primary);
+
+    --popover: var(--color-surface);
+    --popover-foreground: var(--color-text-primary);
+
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-on-primary);
+
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-on-secondary);
+
+    --muted: var(--color-surface-secondary);
+    --muted-foreground: var(--color-text-muted);
+
+    --accent: var(--color-accent);
+    --accent-foreground: var(--color-on-accent);
+
+    --destructive: var(--color-error);
+    --destructive-foreground: var(--color-on-error);
+
+    --border: var(--color-border);
+    --input: var(--color-border);
+    --ring: var(--color-focus-ring);
+    --overlay: var(--color-overlay);
+}
+
+/* ======================================================
+   THEME MAPPING (Tailwind v4)
+   ====================================================== */
+
+@theme inline {
+    --font-display: var(--font-display);
+    --font-body: var(--font-body);
+    --font-mono: var(--font-mono);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-overlay: var(--overlay);
+
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-xl: var(--radius-xl);
+    --radius-2xl: var(--radius-2xl);
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ======================================================
+   BASE LAYER
+   ====================================================== */
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+
+    html {
+        @apply font-sans;
+    }
+}
+
+/* ======================================================
+   DARK THEME - Amethyst Haze
+   ====================================================== */
+
+[data-theme="dark"] {
+    /* ==================================================
+     BACKGROUND / SURFACE
+     ================================================== */
+
+    --color-background: oklch(0.2166 0.0215 292.8474);
+    --color-surface: oklch(0.2544 0.0301 292.7315);
+    --color-surface-secondary: oklch(0.2847 0.0346 291.2726);
+    --color-surface-muted: oklch(0.3063 0.0359 293.3367);
+    --color-overlay: rgb(0 0 0 / 65%);
+
+    /* ==================================================
+     BRAND COLORS
+     ================================================== */
+
+    --color-primary: oklch(0.7058 0.0777 302.0489);
+    --color-secondary: oklch(0.4604 0.0472 295.5578);
+    --color-accent: oklch(0.3181 0.0321 308.6149);
+    --color-supporting: oklch(0.38 0.04 293);
+    --color-supporting-decorative: oklch(0.6 0.05 295);
+
+    /* ==================================================
+     TEXT
+     ================================================== */
+
+    --color-text-primary: oklch(0.9053 0.0245 293.5570);
+    --color-text-secondary: oklch(0.8 0.027 296);
+    --color-text-muted: oklch(0.6974 0.0282 300.0614);
+    --color-text-disabled: oklch(0.5 0.025 295);
+
+    /* ==================================================
+     INTERACTIVE
+     ================================================== */
+
+    --color-primary-hover: oklch(0.76 0.0777 302.0489);
+    --color-primary-active: oklch(0.65 0.0777 302.0489);
+
+    --color-on-primary: oklch(0.2166 0.0215 292.8474);
+    --color-on-secondary: oklch(0.9053 0.0245 293.5570);
+    --color-on-accent: oklch(0.8391 0.0692 2.6681);
+
+    --color-link: oklch(0.78 0.08 300);
+    --color-link-hover: oklch(0.86 0.06 300);
+    --color-on-link: oklch(0.2166 0.0215 292.8474);
+
+    --color-focus-ring: oklch(0.7058 0.0777 302.0489);
+
+    /* ==================================================
+     FEEDBACK / STATUS
+     ================================================== */
+
+    --color-success: #6FBF8F;
+    --color-on-success: #0F1416;
+    --color-success-bg: #163325;
+
+    --color-warning: #D6A64E;
+    --color-on-warning: #0F1416;
+    --color-warning-bg: #33280F;
+
+    --color-error: oklch(0.6875 0.1420 21.4566);
+    --color-on-error: oklch(0.2166 0.0215 292.8474);
+    --color-error-bg: #3A1D17;
+
+    --color-info: #8DB4D6;
+    --color-on-info: #0F1416;
+    --color-info-bg: #182B39;
+
+    /* ==================================================
+     BORDER
+     ================================================== */
+
+    --color-border: oklch(0.3063 0.0359 293.3367);
+    --color-border-strong: oklch(0.4 0.04 293);
+
+    /* ==================================================
+     SHADCN-ONLY TOKENS
+     ================================================== */
+
+    --chart-1: oklch(0.7058 0.0777 302.0489);
+    --chart-2: oklch(0.8391 0.0692 2.6681);
+    --chart-3: oklch(0.7321 0.0749 169.8670);
+    --chart-4: oklch(0.8540 0.0882 76.8292);
+    --chart-5: oklch(0.7857 0.0645 258.0839);
+
+    --sidebar: oklch(0.1985 0.0200 293.6639);
+    --sidebar-foreground: oklch(0.9053 0.0245 293.5570);
+    --sidebar-primary: oklch(0.7058 0.0777 302.0489);
+    --sidebar-primary-foreground: oklch(0.2166 0.0215 292.8474);
+    --sidebar-accent: oklch(0.3181 0.0321 308.6149);
+    --sidebar-accent-foreground: oklch(0.8391 0.0692 2.6681);
+    --sidebar-border: oklch(0.2847 0.0346 291.2726);
+    --sidebar-ring: oklch(0.7058 0.0777 302.0489);
+}
+
+/* Sonner toast theming via semantic design tokens
+   Scoped to .app-sonner + data-sonner-toaster + data-sonner-theme so it
+   outranks sonner's runtime-injected [data-sonner-toaster][data-sonner-theme=...]
+   rules and follows the app theme through --color-* tokens. */
+.app-sonner[data-sonner-toaster][data-sonner-theme] {
+  --normal-bg: var(--color-surface);
+  --normal-bg-hover: var(--color-surface-secondary);
+  --normal-border: var(--color-border);
+  --normal-border-hover: var(--color-border-strong);
+  --normal-text: var(--color-text-primary);
+  --success-bg: var(--color-success-bg);
+  --success-border: var(--color-success);
+  --success-text: var(--color-text-primary);
+  --error-bg: var(--color-error-bg);
+  --error-border: var(--color-error);
+  --error-text: var(--color-text-primary);
+  --info-bg: var(--color-info-bg);
+  --info-border: var(--color-info);
+  --info-text: var(--color-text-primary);
+  --warning-bg: var(--color-warning-bg);
+  --warning-border: var(--color-warning);
+  --warning-text: var(--color-text-primary);
+  --border-radius: var(--radius);
+}
+
+.app-sonner[data-sonner-toaster] [data-description] {
+  color: var(--color-text-secondary);
+}
+
+/* ==================================================
+   CUSTOM MODERN SCROLLBAR
+   ================================================== */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+/* WebKit / Blink (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-strong);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-supporting-decorative);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ==================================================
+   PASSWORD REVEAL (single control per field)
+   Hide the legacy native toggle so desktop never shows
+   two eyes. Our custom .password-toggle stays on fine
+   pointers; on touch devices the browser's native reveal
+   is the only control we keep, so hide ours there.
+   ================================================== */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .password-toggle {
+    display: none;
+  }
+}
+
+/* ==================================================
+   TOOLTIPS ON TOUCH DEVICES
+   Tooltips are hover concepts; suppress them entirely
+   on coarse pointers where hover does not exist.
+   ================================================== */
+@media (pointer: coarse) {
+  [data-slot="tooltip-content"] {
+    display: none;
+  }
+}
+
+
+
