@@ -1,5 +1,5 @@
 const express = require('express')
-const { CreateCategory, getCategories,getCategory,
+const { createCategory, getCategories,getCategory,
     deleteCategory,updateCategory
  } = require('../service/categoryService');
 const { protect, allowedTo } = require("../service/authService");

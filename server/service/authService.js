@@ -1,83 +1,91 @@
+const asyncHandler = require('express-async-handler')
+const createToken = require('../utils/createToken')
+const ApiError = require('../utils/apiError')
 const User = require('../models/userModel')
-const createToken =require('../utils/createToken')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-exports.signup = async(req,res)=>{
-    try {
-      const user = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-      });
-      const token = createToken(user._id);
-      res.status(201).json({
-        data: { _id: user._id, name: user.name, email: user.email },
-        token,
-      });
-    } catch (err) {
-      res.status(400).json({ message: err.message });
-    }
-  
-}
 
 
 
-exports.login = async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    
-    if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-      return res.status(401).json({ message: "Incorrect email or password" });
-    }
-    const token = createToken(user._id);
-    res.status(200).json({
-      data: { _id: user._id, name: user.name, email: user.email },
-      token,
-    });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+exports.signup =asyncHandler(async(req,res)=>{
+  const user =  await User.create({
+    name:req.body.name,
+    email:req.body.email,
+    password:req.body.password
+  })
+  const token = createToken(user.Id)
+
+  res.status(201).json({
+    data:{
+      Id:user._id,
+      name:user.name,
+      email:user.email
+    },
+    token
+  })
+})
+
+exports.login = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email }).select(
+    "+password",
+  );
+
+  if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+    return next(new ApiError("Incorrect email or password", 401));
   }
-};
+  const token = createToken(user._id);
+  res.status(200).json({
+    data: { _id: user._id, name: user.name, email: user.email },
+    token,
+  });
+});
 
+exports.protect = asyncHandler(async (req, res, next) => {
+  let token;
+  if (req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return next(new ApiError("You are not logged in", 401));
+  }
 
-exports.protect = async(req,res,next)=>{
-  try{
-    let token 
-    if(req.headers.authorization&& req.headers.authorization.startsWith('Bearer')){
-      token = req.headers.authorization.split(" ")[1]
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  } catch (err) {
+    return next(new ApiError("Invalid or expired token", 401));
+  }
 
-    }
-    if(!token){
-     return  res.status(401).json({ message: "You are not logged in" });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-    const currentUser = await User.findById(decoded.userId).select('-password');
+  const currentUser = await User.findById(decoded.userId).select("-password");
   if (!currentUser) {
-    return res.status(401).json({ message: "User no longer exists" });
+    return next(new ApiError("User no longer exists", 401));
+  }
+
+  // لو عندك passwordChangedAt في الـ model
+  if (currentUser.passwordChangedAt) {
+    const changedAt = parseInt(
+      currentUser.passwordChangedAt.getTime() / 1000,
+      10,
+    );
+    if (changedAt > decoded.iat) {
+      return next(
+        new ApiError("Password changed recently, please login again", 401),
+      );
+    }
   }
 
   req.user = currentUser;
   next();
-
-  }
-  catch(err){
-    res.status(401).json({ message: "Invalid or expired token" });
-  }
-}
-
-
-
+});
 
 exports.allowedTo =
   (...roles) =>
   (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return res
-        .status(403)
-        .json({ message: "You are not allowed to access this route" });
+      return next(
+        new ApiError("You are not allowed to access this route", 403),
+      );
     }
     next();
   };
